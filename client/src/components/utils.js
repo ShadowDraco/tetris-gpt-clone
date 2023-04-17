@@ -4,25 +4,24 @@ export const collides = (block, board) => {
 
 	for (let row = 0; row < shape.length; row++) {
 		for (let col = 0; col < shape[0].length; col++) {
-			// Check if the block is outside the board boundaries
-			if (
-				position.x + col < 0 ||
-				position.x + col >= board[0].length ||
-				position.y + row >= board.length
-			) {
-				return true
-			}
+			const blockCell = shape[row][col]
 
-			// Check if the block collides with another block on the board
-			if (
-				shape[row][col] !== 0 &&
-				board[position.y + row][position.x + col] !== 0
-			) {
-				return true
+			if (blockCell !== 0) {
+				const boardRow = position.y + row
+				const boardCol = position.x + col
+
+				if (
+					boardRow < 0 ||
+					boardRow >= board.length ||
+					boardCol < 0 ||
+					boardCol >= board[0].length ||
+					board[boardRow][boardCol] !== 0
+				) {
+					return true
+				}
 			}
 		}
 	}
-	return false
 }
 
 export const createEmptyBoard = () => {
@@ -38,36 +37,99 @@ const createBlock = (position, shape, isFalling = true) => {
 // Returns a new block object with a random shape and starting position
 export const generateRandomBlock = () => {
 	const shapes = [
+		// Shape I
+		[
+			[0, 0, 1, 0],
+			[0, 0, 1, 0],
+			[0, 0, 1, 0],
+			[0, 0, 1, 0],
+		],
+		[
+			[0, 0, 0, 0],
+			[1, 1, 1, 1],
+			[0, 0, 0, 0],
+			[0, 0, 0, 0],
+		],
+
+		// Shape J
+		[
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 1, 1],
+		],
+		[
+			[0, 0, 0],
+			[0, 1, 0],
+			[0, 1, 1],
+			[0, 1, 0],
+		],
+
+		// Shape L
+		[
+			[1, 0, 0],
+			[1, 0, 0],
+			[1, 1, 0],
+		],
+		[
+			[0, 0, 0],
+			[0, 0, 1],
+			[0, 1, 1],
+			[0, 0, 1],
+		],
+
+		// Shape O
 		[
 			[1, 1],
 			[1, 1],
 		],
+
+		// Shape S
 		[
+			[0, 1, 1],
+			[1, 1, 0],
+			[0, 0, 0],
+		],
+		[
+			[1, 0, 0],
+			[1, 1, 0],
+			[0, 1, 0],
+		],
+
+		// Shape T
+		[
+			[0, 1, 0],
+			[1, 1, 1],
+			[0, 0, 0],
+		],
+		[
+			[0, 1, 0],
+			[0, 1, 1],
+			[0, 1, 0],
+		],
+		[
+			[0, 0, 0],
 			[1, 1, 1],
 			[0, 1, 0],
 		],
 		[
-			[0, 1, 1],
+			[0, 1, 0],
 			[1, 1, 0],
+			[0, 1, 0],
 		],
+
+		// Shape Z
 		[
 			[1, 1, 0],
 			[0, 1, 1],
+			[0, 0, 0],
 		],
 		[
+			[0, 1, 0],
+			[1, 1, 0],
 			[1, 0, 0],
-			[1, 1, 1],
-		],
-		[
-			[0, 0, 1],
-			[1, 1, 1],
-		],
-		[
-			[1, 0, 0],
-			[1, 0, 0],
-			[1, 1, 1],
 		],
 	]
+
 	const shape = shapes[Math.floor(Math.random() * shapes.length)]
 	const position = { x: 4, y: 0 }
 
